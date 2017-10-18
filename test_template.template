@@ -1,0 +1,169 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: NOTHS Product API - AWS APIGateway plus AWS Lambda
+Resources:
+  ApiGatewayAccount:
+    Type: 'AWS::ApiGateway::Account'
+    Properties:
+      CloudWatchRoleArn: !GetAtt 
+        - ApiGatewayCloudWatchLogsRole
+        - Arn
+  ApiDeployment:
+    Type: 'AWS::ApiGateway::Deployment'
+    DependsOn:
+      - ProductRequest
+    Properties:
+      RestApiId: !Ref NOTHSProductApi
+      StageName: developmen
+  NOTHSProductApi:
+    Type: 'AWS::ApiGateway::RestApi'
+    Properties:
+      Name: NOTHS Product API
+      Description: API used for delivering product/show information
+      FailOnWarnings: true
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: ac5e29d0-ee63-4644-b701-d1b275fa9668
+  FetchProductDataLambda:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Code:
+        ZipFile: !Join 
+          - |+
+
+          - - '''use strict'';'
+            - ''
+            - // FetchProductDataLambda
+            - 'exports.handler = (event, context, callback) => {'
+            - '  console.log(''Event:'', JSON.stringify(event));'
+            - '  const name = event.name || ''anonymous user'';'
+            - '  const response = {data: `Hello, ${name} :)`};'
+            - '  callback(null, response);'
+            - '};'
+      Description: Fecthes product information from Elastic search
+      FunctionName: FetchProductDataLambda
+      Handler: index.handler
+      Role: !GetAtt 
+        - LambdaExecutionRole
+        - Arn
+      Runtime: nodejs4.3
+  LambdaExecutionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+  LambdaPermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:invokeFunction'
+      FunctionName: !GetAtt 
+        - FetchProductDataLambda
+        - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Join 
+        - ''
+        - - 'arn:aws:execute-api:'
+          - !Ref 'AWS::Region'
+          - ':'
+          - !Ref 'AWS::AccountId'
+          - ':'
+          - !Ref NOTHSProductApi
+          - /*
+  NOTHSProductApiStage:
+    DependsOn:
+      - ApiGatewayAccount
+    Type: 'AWS::ApiGateway::Stage'
+    Properties:
+      DeploymentId: !Ref ApiDeployment
+      MethodSettings:
+        - DataTraceEnabled: true
+          HttpMethod: '*'
+          LoggingLevel: INFO
+          ResourcePath: /*
+      RestApiId: !Ref NOTHSProductApi
+      StageName: LATEST
+  ApiGatewayCloudWatchLogsRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - apigateway.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - PolicyName: ApiGatewayLogsPolicy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'logs:CreateLogGroup'
+                  - 'logs:CreateLogStream'
+                  - 'logs:DescribeLogGroups'
+                  - 'logs:DescribeLogStreams'
+                  - 'logs:PutLogEvents'
+                  - 'logs:GetLogEvents'
+                  - 'logs:FilterLogEvents'
+                Resource: '*'
+  ProductResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      RestApiId: !Ref NOTHSProductApi
+      ParentId: !GetAtt 
+        - NOTHSProductApi
+        - RootResourceId
+      PathPart: product
+  ProductRequest:
+    DependsOn: LambdaPermission
+    Type: 'AWS::ApiGateway::Method'
+    Properties:
+      AuthorizationType: NONE
+      HttpMethod: GET
+      Integration:
+        Type: AWS
+        IntegrationHttpMethod: POST
+        Uri: !Join 
+          - ''
+          - - 'arn:aws:apigateway:'
+            - !Ref 'AWS::Region'
+            - ':lambda:path/2015-03-31/functions/'
+            - !GetAtt 
+              - FetchProductDataLambda
+              - Arn
+            - /invocations
+        IntegrationResponses:
+          - StatusCode: 200
+        RequestTemplates:
+          application/json: !Join 
+            - ''
+            - - '{'
+              - '  "name": "$input.params(''name'')"'
+              - '}'
+      RequestParameters:
+        method.request.querystring.name: false
+      ResourceId: !Ref ProductResource
+      RestApiId: !Ref NOTHSProductApi
+      MethodResponses:
+        - StatusCode: 200
+Outputs:
+  RootUrl:
+    Description: Root URL of the API gateway
+    Value: !Join 
+      - ''
+      - - 'https://'
+        - !Ref NOTHSProductApi
+        - .execute-api.
+        - !Ref 'AWS::Region'
+        - .amazonaws.com
