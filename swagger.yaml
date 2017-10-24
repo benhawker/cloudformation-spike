@@ -1,0 +1,67 @@
+swagger: "2.0"
+
+info:
+  version: 1.0.0
+  title: Greetings API
+  description: A simple API to learn how to write OpenAPI Specification
+
+schemes:
+  - https
+basePath: /
+
+paths:
+  /greetings:
+    get:
+      summary: Gets some greetings
+      description: Returns a list containing all greetings. The list supports paging.
+      parameters:
+       - name: pageSize
+         in: query
+         description: Number of greetings returned
+         type: integer
+       - name: pageNumber
+         in: query
+         description: Page number
+         type: integer
+      responses:
+        200:
+          description: A list of greeting
+          schema:
+            type: array
+            items:
+              required:
+                - language
+                - message
+              properties:
+                language:
+                  type: string
+                message:
+                  type: string
+                author:
+                  type: string
+          headers:
+            Access-Control-Allow-Headers:
+              type: string
+            Access-Control-Allow-Origin:
+              type: string
+            Content-Type:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: 200
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'GET'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            responseTemplates:
+              application/json: |
+                "[{\"language\":\"en\",\"message\":\"Hi\"},{\"language\":\"zh-CN\",\"message\":\"Nihao\"},{\"language\":\"fr\",\"message\":\"Salut\"}]"
+        passthroughBehavior: when_no_match
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        type: mock
+
+
