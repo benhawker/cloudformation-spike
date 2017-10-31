@@ -1,6 +1,25 @@
 # cloudformation-spike
 
-Presumes you have the followign:
+This repo includes an example of a products API that exposes a single `GET products/` endpoint.
+
+Using:
+- AWS Cloudformation Template using a AWS Serverless(SAM) transform
+- AWS API Gateway specified with the Swagger/Open API Specification
+- AWS DynamoDB (a single table)
+- 
+
+The project presumes you have the following ENV vars set for the AWS account on which you intend to run this.
+
+```
+AWS_ACCOUNT_ID
+AWS_REGION
+```
+
+The scripts found in `bin` require that you have the `aws cli` tool installed. This can be installed with Homebrew.
+```
+brew install awscli
+```
+
 
 Some helper scripts are included. You may need to provide executable permissions to them:
 
@@ -29,7 +48,14 @@ $ bin/describe your-stack-name
 
 A helper script for populating some basic records in the created DynamoDB table:
 ```
-ruby bin/add_products_to_dynamo.rb TABLE_NAME
+ruby bin/add_products_to_dynamo.rb your-stack-name
+```
+
+
+Get the root path to your newly created api
+```
+bin/get_root_url your-stack-name
+
 ```
 
 

@@ -2,30 +2,31 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Testing a small API deployment
+
+Parameters:
+  Stage:
+    Type: String
+    Description: The default stage
+    Default: test
+
 Resources:
   ApiGateway:
     Type: AWS::Serverless::Api
     Properties:
       DefinitionUri: ./out/swagger.yaml
-      StageName: staging
+      StageName: !Ref Stage
       Variables:
-        DataFetcherLambda:
-          Ref: DataFetcherLambda
         ExecutionRoleName:
           Ref: ApiGatewayExecutionRole
+        ProductsTable:
+          Ref: ProductsTable
 
   ProductsTable:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
         - AttributeName: id
-          AttributeType: N
-        - AttributeName: name
           AttributeType: S
-        - AttributeName: price
-          AttributeType: N
-        - AttributeName: partner_id
-          AttributeType: N
       KeySchema:
         - AttributeName: id
           KeyType: HASH
@@ -62,10 +63,4 @@ Resources:
 Outputs:
   ApiUrl:
     Description: URL of your API endpoint
-    Value: !Join
-      - ''
-      - - https://
-        - !Ref ApiGatewayApi
-        - '.execute-api.'
-        - !Ref 'AWS::Region'
-        - '.amazonaws.com/staging'
+    Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.${AWS::URLSuffix}/${Stage}"

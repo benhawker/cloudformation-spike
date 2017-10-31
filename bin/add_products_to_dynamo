@@ -7,7 +7,7 @@ require 'json'
 dynamodb = Aws::DynamoDB::Client.new(region: 'eu-west-1')
 
 resources = `aws cloudformation describe-stack-resources --stack-name #{ARGV.first}`
-resources = JSON.parse resources.gsub('=>', ':')
+resources = JSON.parse(resources.gsub('=>', ':'))
 
 table_name = resources["StackResources"].select do |r|
   r["ResourceType"] == "AWS::DynamoDB::Table"

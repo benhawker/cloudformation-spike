@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Builds and deploys the API and associated services described in the CloudFormation template.
+
 if [[ $# -eq 0 ]] ; then
  	echo 'Please pass a stack-name as an argument'
   exit 0

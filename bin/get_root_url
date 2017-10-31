@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+# Returns the /products url of the requested stack.
+
+require 'json'
+
+if ARGV.empty?
+  puts 'Please pass a stack-name as an argument'
+  exit(0)
+end
+
+resources = `aws cloudformation describe-stack-resources --stack-name #{ARGV.first}`
+resources = JSON.parse(resources.gsub('=>', ':'))
+
+table_name = resources["StackResources"].select do |r|
+  r["ResourceType"] == "AWS::ApiGateway::RestApi"
+end.first["PhysicalResourceId"]
+
+puts "https://#{table_name}.execute-api.eu-west-1.amazonaws.com/test/products"
