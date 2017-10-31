@@ -25,10 +25,6 @@ paths:
           in: query
           description: Number of products returned
           type: integer
-        - name: pageNumber
-          in: query
-          description: Page number
-          type: integer
       responses:
         200:
           description: A valid request. Returns all products.
@@ -51,29 +47,27 @@ paths:
           description: A 5** Error occurred.
           schema:
             $ref: "#/definitions/error"
-
       x-amazon-apigateway-integration:
         type: aws
-        credentials: !GetAtt ApiGatewayExecutionRole.Arn
-        httpMethod: GET
-        uri: !Sub "arn:aws:apigateway:${AWS::Region}:dynamodb:action/Scan"
+        credentials: "arn:aws:iam::{{ AWS_ACCOUNT_ID }}:role/${stageVariables.ExecutionRoleName}"
+        httpMethod: POST
+        uri: "arn:aws:apigateway:{{ AWS_REGION }}:dynamodb:action/Scan"
         requestTemplates:
-          application/json: !Sub |
+          application/json: |
             {
-              "TableName": "${ProductsTable}",
+              "TableName": "${stageVariables.ProductsTable}"
             }
-      x-amazon-apigateway-integration:
         responses:
           default:
             statusCode: 200
             responseTemplates:
               application/x-amz-json-1.0: |
                 [
-                  #foreach($item in $input.path('$.Items'))
+                  #foreach($product in $input.path('$.Items'))
                   {
-                    "id": "$item.id.N",
-                    "name": $item.name.S,
-                    "price": $item.price.N
+                    "id": "$product.id.S",
+                    "name": $product.name.S,
+                    "price": $product.price.N
                   }#if($foreach.hasNext),#end
                   #end
                 ]
@@ -81,11 +75,7 @@ paths:
               method.response.header.Access-Control-Allow-Methods: "'GET'"
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'"
               method.response.header.Access-Control-Allow-Origin: "'*'"
-            responseTemplates:
-              application/json: |
-                "[{\"language\":\"en\",\"message\":\"Hi\"},{\"language\":\"zh-CN\",\"message\":\"Nihao\"},{\"language\":\"fr\",\"message\":\"Salut\"}]"
             400:
-              statusCode: 400
               responseTemplates:
                 application/json: |
                   {
@@ -94,82 +84,13 @@ paths:
                     "__raw": $input.body
                   }
             500:
-              statusCode: 500
               responseTemplates:
                 application/x-amz-json-1.0: |
                   {
                     "type": "InternalServerError",
                     "message": "There was an internal error",
                     "__raw": $input.body
-                  }
-        passthroughBehavior: when_no_match
-        requestTemplates:
-          application/json: "{\"statusCode\": 200}"
-        type: mock
-  
-  /products/{id}:
-    get:
-      summary: Returns a specific product.
-      operationId: GetProduct
-      description: Returns the requested product with all attributes.
-      x-amazon-apigateway-request-validator: params-only
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - name: id
-          in: path
-          required: true
-          type: string
-      responses:
-        200:
-          description: A valid request. Returns the specified product.
-          headers:
-            Access-Control-Allow-Headers:
-              type: string
-            Access-Control-Allow-Origin:
-              type: string
-            Content-Type:
-              type: string
-            Access-Control-Allow-Methods:
-              type: string
-          schema:
-            $ref: "#/definitions/product"
-        400:
-          description: A 4** Error occurred.
-          schema:
-            $ref: "#/definitions/error"
-        500:
-          description: A 5** Error occurred.
-          schema:
-            $ref: "#/definitions/error"
-      x-amazon-apigateway-integration:
-        responses:
-          default:
-            statusCode: 200
-            responseParameters:
-              method.response.header.Access-Control-Allow-Methods: "'GET'"
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'"
-              method.response.header.Access-Control-Allow-Origin: "'*'"
-            responseTemplates:
-              application/json: |
-                "[{\"language\":\"en\",\"message\":\"Hi\"},{\"language\":\"zh-CN\",\"message\":\"Nihao\"},{\"language\":\"fr\",\"message\":\"Salut\"}]"
-            400:
-              statusCode: 400
-              responseTemplates:
-                application/json: |
-                  "[{\"statusCode\":\"400\"}]"
-            500:
-              statusCode: 500
-              responseTemplates:
-                application/json: |
-                  "[{\"statusCode\":\"500\"}]"
-        passthroughBehavior: when_no_match
-        requestTemplates:
-          application/json: "{\"statusCode\": 200}"
-        type: mock
-   
+                  }  
 definitions:
   products:
     type: array

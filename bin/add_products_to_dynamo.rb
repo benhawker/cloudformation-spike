@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+
+# Usage: ruby add_products_to_dynamo.rb STACK_NAME
+require 'aws-sdk'
+require 'json'
+
+dynamodb = Aws::DynamoDB::Client.new(region: 'eu-west-1')
+
+resources = `aws cloudformation describe-stack-resources --stack-name #{ARGV.first}`
+resources = JSON.parse resources.gsub('=>', ':')
+
+table_name = resources["StackResources"].select do |r|
+  r["ResourceType"] == "AWS::DynamoDB::Table"
+end.first["PhysicalResourceId"]
+
+10.times do |i|
+  product = {
+    id: "#{i}",
+    name: "Product Name #{i}",
+    price: rand(100)
+  }
+
+  params = {
+    table_name: table_name,
+    item: product
+  }
+    
+  begin
+    result = dynamodb.put_item(params)
+    puts "Added product #{i}"
+  rescue  Aws::DynamoDB::Errors::ServiceError => e
+    puts 'Unable to add product'
+    puts e.message
+  end
+end

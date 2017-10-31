@@ -6,7 +6,7 @@ Resources:
   ApiGateway:
     Type: AWS::Serverless::Api
     Properties:
-      DefinitionUri: s3://greetings-api/swagger.yaml
+      DefinitionUri: ./out/swagger.yaml
       StageName: staging
       Variables:
         DataFetcherLambda:
@@ -54,7 +54,7 @@ Resources:
         Statement:
           - Effect: Allow
             Action:
-              - dynamodb:Query
+              - dynamodb:Scan
             Resource: !GetAtt ProductsTable.Arn
       Roles:
         - Ref: ApiGatewayExecutionRole
