@@ -9,8 +9,24 @@ const documentClient = () => {
 }
 
 exports.handler = (event, context, cb) => {
-  const id = Math.floor(Math.random()*100000);
-  const price = Math.floor(Math.random()*100);
+  if (!event || !event.Records || event.Records.length < 1) {
+    cb('malformed event ', event);
+    return;
+  }
+
+  const record = event.Records.shift();
+  let { Subject, Message } = record.Sns;
+
+  try {
+    Message = JSON.parse(Message);
+  } catch (e) {
+    cb(e);
+    return;
+  }
+
+  const id = Message.id || '0';
+  const price = Message.price || 0;
+
   const Item = {
     id:  `${id}`,
     name: `Product Name ${id}`,
@@ -25,3 +41,6 @@ exports.handler = (event, context, cb) => {
     }
   });
 };
+
+
+/// "Message": "{\"id\": \"37738\",\"name\": \"Product Name 37738\",\"price\": 59}",
