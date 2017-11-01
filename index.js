@@ -8,7 +8,7 @@ const documentClient = () => {
   return new AWS.DynamoDB.DocumentClient({ region: REGION, params });
 }
 
-exports.writeToDB = (event, context, cb) => {
+exports.handler = (event, context, cb) => {
   const id = Math.floor(Math.random()*100000);
   const price = Math.floor(Math.random()*100);
   const Item = {

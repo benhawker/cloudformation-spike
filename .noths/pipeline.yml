@@ -73,6 +73,8 @@ Metadata:
         default: "Repository Name including Username"
       Branch:
         default: "Branch on Repository"
+      TopicArn:
+        default: "arn:aws:sns:eu-west-1:235649422648:spike-db-update"
 
 Resources:
 

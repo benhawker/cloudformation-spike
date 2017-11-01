@@ -34,10 +34,13 @@ Resources:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
 
+  ProductUpdateTopic:
+    Type: AWS::SNS::Topic
+
   ScheduledFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: index.writeToDB
+      Handler: index.handler
       Runtime: nodejs6.10
       CodeUri: ./out/index.js
       Policies:
@@ -49,10 +52,10 @@ Resources:
               Resource:
                 - !GetAtt ProductsTable.Arn
       Events:
-        Timer:
-          Type: Schedule
+        Update: 
+          Type: SNS
           Properties:
-            Schedule: rate(1 minute)
+            Topic: !Ref ProductUpdateTopic
       Environment:
         Variables:
           TABLE: !Ref ProductsTable
