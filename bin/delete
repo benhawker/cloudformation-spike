@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [[ $# -eq 0 ]] ; then
 	echo 'Please pass a stack-name as an argument'
   exit 0
