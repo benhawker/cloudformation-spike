@@ -1,0 +1,53 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+      - echo "Updating AWS CLI..."
+      - pip install --upgrade awscli
+      
+      - echo "Create output directory"
+      - mkdir out
+
+      - echo "Installing Mustache Globally"
+      - npm install -g mustache
+
+  pre_build:
+    commands:
+      - echo "Creating AWS Config file"
+      - node -e 'console.log(JSON.stringify(process.env))' > out/build.json
+
+      - echo "Installing dependencies"
+      - npm install
+
+  build:
+    commands:
+      - echo "Linting test suite"
+      - npm run lint
+
+      - echo "Testing Open API"
+      - npm run test
+
+      - echo "Validating Open API Spec"
+      - npm run validate
+
+      - echo "Bundling Open API Spec"
+      - npm run bundle -- --outfile out/bundled.json
+
+      - echo "Compiling API template..."
+      - mustache out/build.json out/bundled.json > out/api.json
+
+      - echo "Compiling Cloudformation (Bucket $S3_BUCKET)..."
+      - aws cloudformation package --template-file .noths/service.yml --s3-prefix build --s3-bucket $ARTIFACT_STORE --output-template-file out/template.yml
+
+      - echo "Copying configuration"
+      - cp -R .noths/.config/* out/
+
+      - echo "Listing Output"
+      - ls -lR out/
+
+artifacts:
+  type: zip
+  discard-paths: yes
+  files:
+    - out/**/*

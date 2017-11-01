@@ -1,0 +1,10 @@
+{
+  "Parameters": {
+    "DomainName": "beta-api",
+    "DomainZoneName": "notonthehighstreet.com",
+    "DomainCertificateArn": "arn:aws:acm:eu-west-1:593627502441:certificate/0695a03d-9485-4754-bcb1-b218f46e6776",
+    "Stage": "production",
+    "CacheEnabled": "Yes",
+    "CacheSize": "1.6"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "Parameters": {
+    "DomainZoneName": "qa.noths.com",
+    "DomainCertificateArn": "arn:aws:acm:us-east-1:303441323650:certificate/401c3394-9efb-47c6-8ff3-26f1bc09f7d3",
+    "Stage": "staging",
+    "CacheEnabled": "No"
+  }
+}
