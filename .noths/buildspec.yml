@@ -12,6 +12,9 @@ phases:
       - echo "Installing Mustache Globally"
       - npm install -g mustache
 
+      - echo "Installing dependencies"
+      - npm install
+
   pre_build:
     commands:
       - echo "Creating AWS Config file"
@@ -19,11 +22,14 @@ phases:
 
   build:
     commands:
+      - echo "Transpile Lambda function"
+      - npm run build
+
       - echo "Compiling API template..."
       - mustache out/build.json swagger.yaml > out/swagger.yaml
 
       - echo "Compiling Cloudformation, Bucket " $ARTIFACT_STORE
-      - aws cloudformation package --template-file sam.yaml --s3-prefix build --s3-bucket $ARTIFACT_STORE --output-template-file out/template.yaml      
+      - aws cloudformation package --template-file sam.yaml --s3-prefix build --s3-bucket $ARTIFACT_STORE --output-template-file out/template.yaml
 
       - echo "Copying configuration"
       - cp -R .noths/.config/* out/

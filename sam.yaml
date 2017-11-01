@@ -34,6 +34,29 @@ Resources:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
 
+  ScheduledFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.writeToDB
+      Runtime: nodejs6.10
+      CodeUri: ./out/index.js
+      Policies:
+        - Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:PutItem
+              Resource:
+                - !GetAtt ProductsTable.Arn
+      Events:
+        Timer:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 minute)
+      Environment:
+        Variables:
+          TABLE: !Ref ProductsTable
+
   ApiGatewayExecutionRole:
     Type: AWS::IAM::Role
     Properties:

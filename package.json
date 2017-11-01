@@ -1,0 +1,40 @@
+{
+  "name": "cloudformation-spike",
+  "version": "1.0.0",
+  "description": "This repo includes an example of a products API that exposes a single `GET products/` endpoint.",
+  "main": "handler.js",
+  "scripts": {
+    "build": "webpack --progress --colors",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benhawker/cloudformation-spike.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benhawker/cloudformation-spike/issues"
+  },
+  "homepage": "https://github.com/benhawker/cloudformation-spike#readme",
+  "dependencies": {
+    "aws-sdk": "^2.141.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^3.8.1"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "6.1"
+          }
+        }
+      ]
+    ]
+  }
+}

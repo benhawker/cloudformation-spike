@@ -1,7 +1,9 @@
 #!/usr/bin/env ruby
 
+system "gem install aws-sdk-dynamodb"
+
 # Usage: ruby add_products_to_dynamo.rb STACK_NAME
-require 'aws-sdk'
+require 'aws-sdk-dynamodb'
 require 'json'
 
 dynamodb = Aws::DynamoDB::Client.new(region: 'eu-west-1')
