@@ -1,0 +1,9 @@
+#!/bin/bash
+
+aws \
+  --profile developer \
+  --region eu-west-1 cloudformation deploy \
+  --template-file .noths/pipeline.yml \
+  --stack-name cloudformation-spike \
+  --capabilities CAPABILITY_IAM \
+  --parameter-overrides GitHubToken=4b0d2a723d941454fe06b81a0045b2552e2caf95 Repository=benhawker/cloudformation-spike Branch=master Project=spike Configuration=staging

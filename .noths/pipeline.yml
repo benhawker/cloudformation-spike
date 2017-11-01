@@ -144,7 +144,7 @@ Resources:
                 RoleArn: !GetAtt CloudformationRole.Arn
                 StackName: !Ref Project
                 TemplateConfiguration: !Sub "BuildOutput::${Configuration}.json"
-                TemplatePath: BuildOutput::template.yml
+                TemplatePath: BuildOutput::template.yaml
                 ParameterOverrides: !If
                   - IsProduction
                   - |
