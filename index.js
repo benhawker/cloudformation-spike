@@ -9,17 +9,19 @@ const documentClient = () => {
 }
 
 exports.writeToDB = (event, context, cb) => {
-  const Item = {
-    id: 999,
-    name: 'Test',
-    price: 99
+  const id = Math.floor(Math.random()*100000);
+  const price = Math.floor(Math.random()*100);
+  const item = {
+    id:  `${id}`,
+    name: `Product Name ${id}`,
+    price: price
   };
   
-  documentClient().put({ TableName: TABLE, Item }, (err) => {
+  documentClient().put({ TableName: TABLE, item }, (err) => {
     if (err) {
       cb(err);
     } else {
-      cb(null, Item);
+      cb(null, item);
     }
   });
-}
+};
