@@ -129,33 +129,36 @@ Resources:
                 ProjectName: !Ref Build
         - Name: Release
           Actions:
-            - Name: "Deploy"
-              RunOrder: 1
-              ActionTypeId:
-                Category: Deploy
-                Owner: AWS
-                Provider: CloudFormation
-                Version: 1
-              InputArtifacts:
-                - Name: BuildOutput
-              Configuration:
-                ActionMode: REPLACE_ON_FAILURE
-                Capabilities: CAPABILITY_IAM
-                RoleArn: !GetAtt CloudformationRole.Arn
-                StackName: !Ref Project
-                TemplateConfiguration: !Sub "BuildOutput::${Configuration}.json"
-                TemplatePath: BuildOutput::template.yaml
-                ParameterOverrides: !If
-                  - IsProduction
-                  - |
-                    {
-                      "StageWeight": "255"
-                    }
-                  - |
-                    {
-                      "StageWeight": "255",
-                      "DomainName": { "Fn::GetParam": ["BuildOutput", "build.json", "CODEBUILD_RESOLVED_SOURCE_VERSION"] }
-                    }
+          - Name: Create
+            RunOrder: 1
+            ActionTypeId:
+              Category: Deploy
+              Owner: AWS
+              Provider: CloudFormation
+              Version: 1
+            InputArtifacts:
+              - Name: BuildOutput
+            Configuration:
+              ActionMode: CHANGE_SET_REPLACE
+              Capabilities: CAPABILITY_IAM
+              RoleArn: !GetAtt CloudformationRole.Arn
+              StackName: !Ref Project
+              ChangeSetName: !Ref Project
+              TemplateConfiguration: !Sub "BuildOutput::${Configuration}.json"
+              TemplatePath: BuildOutput::template.yaml
+          - Name: Deploy
+            RunOrder: 2
+            ActionTypeId:
+              Category: Deploy
+              Owner: AWS
+              Provider: CloudFormation
+              Version: 1
+            Configuration:
+              ActionMode: CHANGE_SET_EXECUTE
+              Capabilities: CAPABILITY_IAM
+              ChangeSetName: !Ref Project
+              RoleArn: !GetAtt CloudformationRole.Arn                
+              StackName: !Ref Project
 
   Build:
     Type: AWS::CodeBuild::Project
