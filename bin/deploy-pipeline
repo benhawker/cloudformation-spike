@@ -1,8 +1,10 @@
 #!/bin/bash
 
-aws \
-  --profile developer \
-  --region eu-west-1 cloudformation deploy \
+# This script deploys or redeploys the specified AWS CodePipeline as defined in .noths/pipeline.yml.
+
+aws cloudformation deploy \
+  --profile default \
+  --region eu-west-1 \
   --template-file .noths/pipeline.yml \
   --stack-name cloudformation-spike \
   --capabilities CAPABILITY_IAM \

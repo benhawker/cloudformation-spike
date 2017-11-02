@@ -86,6 +86,16 @@ Resources:
       Roles:
         - Ref: ApiGatewayExecutionRole
 
+  Monitoring:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: ./.noths/monitoring.yml
+      TimeoutInMinutes: 5
+      Parameters:
+        DashboardName: !Sub "${AWS::StackName}-${Stage}"
+        RestApiName: !Ref AWS::StackName
+        RestApiStage: !Ref Stage
+
 Outputs:
   ApiUrl:
     Description: URL of your API endpoint

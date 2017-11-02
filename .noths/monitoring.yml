@@ -1,20 +1,16 @@
+---
 AWSTemplateFormatVersion: 2010-09-09
-
-Description: Product API Monitoring Dashboard
+Description: NOTHS Product API Monitoring Dashboard
 
 Parameters:
-
   DashboardName:
     Type: String
-
   RestApiName:
     Type: String
-
   RestApiStage:
     Type: String
 
 Resources:
-
   Dashboard:
     Type: AWS::CloudWatch::Dashboard
     Properties:
@@ -22,49 +18,105 @@ Resources:
       DashboardBody: !Sub |
         {
           "widgets": [
-            {
-              "type": "metric",
-              "x": 0,
-              "y": 0,
-              "width": 12,
-              "height": 6,
-              "properties": {
-                "view": "timeSeries",
-                "stacked": false,
-                "metrics": [
-                  [
-                    "AWS/ApiGateway", "Count", "ApiName", "${RestApiName}", "Resource", "/health", "Stage", "${RestApiStage}", "Method", "GET",
-                    { "stat": "Sum", "label": "Requests", "color": "#2ca02c" }
-                  ],
-                  [
-                    ".", "4XXError", ".", ".", ".", ".", ".", ".", ".", ".",
-                    { "stat": "Sum", "label": "4XX" }
-                  ],
-                  [
-                    ".", "5XXError", ".", ".", ".", ".", ".", ".", ".", ".",
-                    { "stat": "Sum", "color": "#d62728", "label": "5XX" }
-                  ]
-                ],
-                "region": "${AWS::Region}",
-                "period": 300,
-                "title": "Health Requests",
-                "annotations": {
-                  "horizontal": [
-                    {
-                      "color": "#98df8a",
-                      "label": "Route 53 Health Check (5 Minutes)",
-                      "value": 30
-                    }
-                  ]
-                }
+              {
+                  "type": "metric",
+                  "x": 0,
+                  "y": 0,
+                  "width": 24,
+                  "height": 3,
+                  "properties": {
+                      "view": "singleValue",
+                      "metrics": [
+                          [ "AWS/ApiGateway", "Count", "ApiName", "Products API", { "stat": "Sum", "period": 86400 } ],
+                          [ ".", "5XXError", ".", ".", { "stat": "Sum", "period": 86400 } ],
+                          [ ".", "4XXError", ".", ".", { "stat": "Sum", "period": 86400 } ],
+                          [ ".", "Latency", ".", ".", { "period": 86400 } ],
+                          [ ".", "IntegrationLatency", ".", ".", { "period": 86400 } ]
+                      ],
+                      "region": "eu-west-1",
+                      "period": 300,
+                      "title": "Product API 24hr Summary"
+                  }
+              },
+              {
+                  "type": "metric",
+                  "x": 0,
+                  "y": 3,
+                  "width": 24,
+                  "height": 3,
+                  "properties": {
+                      "view": "singleValue",
+                      "metrics": [
+                          [ "AWS/DynamoDB", "ConsumedReadCapacityUnits", "TableName", "spike-ProductsTable-35VLIAKIDQVB", { "period": 86400 } ],
+                          [ ".", "ConsumedWriteCapacityUnits", ".", ".", { "period": 86400 } ],
+                          [ ".", "ProvisionedWriteCapacityUnits", ".", ".", { "period": 86400 } ],
+                          [ ".", "ProvisionedReadCapacityUnits", ".", ".", { "period": 86400 } ]
+                      ],
+                      "region": "eu-west-1",
+                      "title": "DynamoDB Products Table Summary",
+                      "period": 300
+                  }
+              },
+              {
+                  "type": "metric",
+                  "x": 0,
+                  "y": 6,
+                  "width": 24,
+                  "height": 3,
+                  "properties": {
+                      "view": "singleValue",
+                      "metrics": [
+                          [ "AWS/Lambda", "Invocations", "FunctionName", "spike-alarms-to-slack", { "period": 86400, "stat": "Sum" } ],
+                          [ ".", "Errors", ".", ".", { "period": 86400, "stat": "Sum" } ],
+                          [ ".", "Throttles", ".", ".", { "period": 86400, "stat": "Sum" } ],
+                          [ ".", "Duration", ".", ".", { "period": 86400, "stat": "Sum" } ]
+                      ],
+                      "region": "eu-west-1",
+                      "title": "Slack Alarms Lambda",
+                      "period": 300
+                  }
+              },
+              {
+                  "type": "metric",
+                  "x": 0,
+                  "y": 9,
+                  "width": 24,
+                  "height": 3,
+                  "properties": {
+                      "view": "singleValue",
+                      "metrics": [
+                          [ "AWS/SNS", "NumberOfMessagesPublished", "TopicName", "spike-ProductUpdateTopic-39VSNZN62A7U", { "stat": "Sum", "period": 86400 } ],
+                          [ ".", "NumberOfNotificationsDelivered", ".", ".", { "stat": "Sum", "period": 86400 } ],
+                          [ ".", "NumberOfNotificationsFailed", ".", ".", { "stat": "Sum", "period": 86400 } ],
+                          [ ".", "PublishSize", ".", ".", { "period": 86400 } ]
+                      ],
+                      "region": "eu-west-1",
+                      "period": 300,
+                      "title": "SNS ProductUpdate Summary"
+                  }
+              },
+              {
+                  "type": "metric",
+                  "x": 0,
+                  "y": 12,
+                  "width": 24,
+                  "height": 3,
+                  "properties": {
+                      "view": "singleValue",
+                      "metrics": [
+                          [ "AWS/Lambda", "Invocations", "FunctionName", "spike-ScheduledFunction-4H7ERFYZ266Q", { "stat": "Sum", "period": 86400 } ],
+                          [ ".", "Errors", ".", ".", { "stat": "Sum", "period": 86400 } ],
+                          [ ".", "Throttles", ".", ".", { "period": 86400, "stat": "Sum" } ],
+                          [ ".", "Duration", ".", ".", { "period": 86400 } ]
+                      ],
+                      "region": "eu-west-1",
+                      "title": "Write Product To DyanmoDB Lambda",
+                      "period": 300
+                  }
               }
-            }
           ]
-        }
-
+      }
 Outputs:
-
   DashboardUrl:
     Description: AWS Console HTTPs URL for Monitoring
-    Value:
-      Fn::Sub: https://${AWS::Region}.console.aws.amazon.com/cloudwatch/home?region=${AWS::Region}#dashboards:name=${Dashboard}
+    Value: !Sub "https://${AWS::Region}.console.aws.amazon.com/cloudwatch/home?region=${AWS::Region}#dashboards:name=${Dashboard}
