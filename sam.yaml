@@ -37,7 +37,7 @@ Resources:
   ProductUpdateTopic:
     Type: AWS::SNS::Topic
 
-  ScheduledFunction:
+  WriteToDynamoLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
@@ -95,6 +95,9 @@ Resources:
         DashboardName: !Sub "${AWS::StackName}-${Stage}"
         RestApiName: !Ref AWS::StackName
         RestApiStage: !Ref Stage
+        ProductsTable: !Ref ProductsTable
+        ProductUpdateTopic: !Ref ProductUpdateTopic
+        WriteToDynamoLambdaFunction: !Ref WriteToDynamoLambdaFunction
 
 Outputs:
   ApiUrl:

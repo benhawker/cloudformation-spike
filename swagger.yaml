@@ -2,7 +2,7 @@ swagger: "2.0"
 
 info:
   version: 0.0.1
-  title: Products API
+  title: NOTHS Products API
   description: Public Product API
 
 schemes:
