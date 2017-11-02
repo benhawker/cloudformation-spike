@@ -126,4 +126,4 @@ Resources:
 Outputs:
   DashboardUrl:
     Description: AWS Console HTTPs URL for Monitoring
-    Value: !Sub "https://${AWS::Region}.console.aws.amazon.com/cloudwatch/home?region=${AWS::Region}#dashboards:name=${Dashboard}
+    Value: !Sub "https://${AWS::Region}.console.aws.amazon.com/cloudwatch/home?region=${AWS::Region}#dashboards:name=${Dashboard}"
