@@ -13,7 +13,9 @@ The project presumes you have the following ENV vars set for the AWS account on 
 ```
 AWS_ACCOUNT_ID (Your AWS account ID - i.e 111121323423)
 AWS_REGION (The Region into which you want to deploy this project i.e. eu-west-1)
-GITHUB_TOKEN (To enable access to the repo)
+GITHUB_TOKEN (To enable access to the repo.)
+SLACK_PATH (The path to the Slack Webhook you have setup to receive your alerts).
+
 ```
 
 The scripts found in `bin` require that you have the `aws cli` tool installed. This can be installed with Homebrew.
