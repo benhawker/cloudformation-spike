@@ -47,7 +47,7 @@ Resources:
     Properties:
       Handler: index.handler
       Runtime: nodejs6.10
-      CodeUri: ./out/index.js
+      CodeUri: ./out/dynamo-write-lambda.js
       Policies:
         - Version: 2012-10-17
           Statement:
