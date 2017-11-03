@@ -34,9 +34,9 @@ Resources:
       ActionsEnabled: true
 
       AlarmActions: 
-        - !Ref AlertingTopic
+        - Ref: AlertingTopic
       OKActions: 
-        - !Ref AlertingTopic
+        - Ref: AlertingTopic
       MetricName: Latency
       ComparisonOperator: GreaterThanOrEqualToThreshold
       EvaluationPeriods: '1'
