@@ -16,4 +16,4 @@ table_name = resources["StackResources"].select do |r|
   r["ResourceType"] == "AWS::ApiGateway::RestApi"
 end.first["PhysicalResourceId"]
 
-puts "https://#{table_name}.execute-api.eu-west-1.amazonaws.com/test/products"
+puts "https://#{table_name}.execute-api.eu-west-1.amazonaws.com/staging/products"

@@ -26,6 +26,8 @@ Resources:
   AlertingTopic:
     Type: AWS::SNS::Topic
 
+  # TODO: Monday - this is a nested template - so no transform.
+  # Need to convert this to AWS::Lambda::Function from Serverless::Function
   PostAlertToSlackFunction:
     Type: AWS::Serverless::Function
     Properties:
