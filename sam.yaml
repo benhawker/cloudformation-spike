@@ -7,7 +7,12 @@ Parameters:
   Stage:
     Type: String
     Description: The default stage
-    Default: test
+    Default: staging
+
+  SlackPath:
+    Type: String
+    Description: The Slack Webhook address
+    Default: ""
 
 Resources:
   ApiGateway:
@@ -98,6 +103,7 @@ Resources:
         ProductsTable: !Ref ProductsTable
         ProductUpdateTopic: !Ref ProductUpdateTopic
         WriteToDynamoLambdaFunction: !Ref WriteToDynamoLambdaFunction
+        SlackPath: !Ref SlackPath
 
 Outputs:
   ApiUrl:

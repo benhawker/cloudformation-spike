@@ -31,6 +31,11 @@ phases:
       - echo "Compiling Cloudformation, Bucket " $ARTIFACT_STORE
       - aws cloudformation package --template-file sam.yaml --s3-prefix build --s3-bucket $ARTIFACT_STORE --output-template-file out/template.yaml
 
+      - echo "Compiling Configuration templates..."
+      # You will need to manually add further environments in here.
+      - mustache out/build.json .noths/.config/staging.json > .noths/.config/staging.json
+      - mustache out/build.json .noths/.config/production.json > .noths/.config/production.json
+
       - echo "Copying configuration"
       - cp -R .noths/.config/* out/
 

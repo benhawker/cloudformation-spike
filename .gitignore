@@ -2,3 +2,7 @@ build.json
 out/*
 .DS_Store
 node_modules/*
+.env
+bin/deploy-pipeline
+.noths/.config/staging.json
+.noths/.config/production.json

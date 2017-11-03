@@ -11,8 +11,9 @@ Using:
 The project presumes you have the following ENV vars set for the AWS account on which you intend to run this.
 
 ```
-AWS_ACCOUNT_ID
-AWS_REGION
+AWS_ACCOUNT_ID (Your AWS account ID - i.e 111121323423)
+AWS_REGION (The Region into which you want to deploy this project i.e. eu-west-1)
+GITHUB_TOKEN (To enable access to the repo)
 ```
 
 The scripts found in `bin` require that you have the `aws cli` tool installed. This can be installed with Homebrew.
@@ -55,7 +56,6 @@ ruby bin/add_products_to_dynamo.rb your-stack-name
 Get the root path to your newly created api
 ```
 bin/get_root_url your-stack-name
-
 ```
 
 

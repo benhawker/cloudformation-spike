@@ -18,10 +18,29 @@ Parameters:
   SubscriberURL:
     Type: String
     Default: ""
+  SlackPath: #This is the identifier to the Slack webhook that will post the specified channel.
+    Type: String
+    Default: ""
 
 Resources:
   AlertingTopic:
     Type: AWS::SNS::Topic
+
+  PostAlertToSlackFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: alert-lambda.Slack
+      Runtime: nodejs6.10
+      CodeUri: ./out
+      Timeout: 10
+      Environment:
+        Variables:
+          SLACK_PATH: !Ref SlackPath
+      Events:
+        Alarm:
+          Type: SNS
+          Properties:
+            Topic: !Ref AlertingTopic
 
   # Docs for CloudWatch::Alarm resource http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cw-alarm.html#w2ab2c21c10d187c15
   LatencyAlarm:
@@ -37,13 +56,13 @@ Resources:
         - Ref: AlertingTopic
       MetricName: Latency
       ComparisonOperator: GreaterThanOrEqualToThreshold
-      EvaluationPeriods: '1'
       Period: 60 #I.e. 60 seconds.
       EvaluationPeriods: 2
       Statistic: Average
       Threshold: 1
       Unit: Milliseconds
-
+      TreatMissingData: breaching
+      
   Dashboard:
     Type: AWS::CloudWatch::Dashboard
     Properties:

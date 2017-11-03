@@ -1,7 +1,7 @@
 module.exports = {
   entry: [
     'babel-polyfill',
-    './index.js',
+    './alert-lambda/index.js',
   ],
   target: 'node',
   externals: {
@@ -9,8 +9,8 @@ module.exports = {
   },
   output: {
     libraryTarget: 'commonjs2',
-    path: `${__dirname}/out`,
-    filename: 'index.js',
+    path: `${__dirname}/../out`,
+    filename: 'alert-lambda.js',
   },
   module: {
     loaders: [

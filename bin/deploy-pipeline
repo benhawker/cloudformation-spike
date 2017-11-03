@@ -1,11 +1,10 @@
 #!/bin/bash
 
 # This script deploys or redeploys the specified AWS CodePipeline as defined in .noths/pipeline.yml.
-
 aws cloudformation deploy \
   --profile default \
   --region eu-west-1 \
   --template-file .noths/pipeline.yml \
   --stack-name cloudformation-spike \
   --capabilities CAPABILITY_IAM \
-  --parameter-overrides GitHubToken=4b0d2a723d941454fe06b81a0045b2552e2caf95 Repository=benhawker/cloudformation-spike Branch=master Project=spike Configuration=staging
+  --parameter-overrides GitHubToken=ENV['GITHUB_TOKEN'] Repository=benhawker/cloudformation-spike Branch=master Project=spike Configuration=staging
