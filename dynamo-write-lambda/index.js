@@ -1,4 +1,4 @@
-wconst AWS = require('aws-sdk');
+const AWS = require('aws-sdk');
 
 const REGION = process.env.AWS_REGION;
 const TABLE = process.env.TABLE;

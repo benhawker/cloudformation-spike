@@ -15,7 +15,7 @@ const template = {
   attachments: [],
 };
 
-export default class Slack extends SNS {
+class Slack extends SNS {
   parseRecord({
     record: {
       Sns: {
