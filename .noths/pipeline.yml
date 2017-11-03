@@ -3,7 +3,6 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: "Creates a build, test and deployment pipeline."
 
 Parameters:
-
   GitHubToken:
     Type: String
     NoEcho: true
@@ -49,11 +48,9 @@ Parameters:
       - staging
 
 Conditions:
-
   IsProduction: !Equals [ !Ref Configuration, production ]
 
 Metadata:
-
   AWS::CloudFormation::Interface:
     ParameterGroups:
       - Label:
@@ -77,7 +74,6 @@ Metadata:
         default: "arn:aws:sns:eu-west-1:235649422648:spike-db-update"
 
 Resources:
-
   PipelineArtifactStore:
     Type: AWS::S3::Bucket
     Properties:
