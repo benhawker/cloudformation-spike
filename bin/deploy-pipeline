@@ -7,4 +7,4 @@ aws cloudformation deploy \
   --template-file .noths/pipeline.yml \
   --stack-name cloudformation-spike \
   --capabilities CAPABILITY_IAM \
-  --parameter-overrides GitHubToken=ENV['GITHUB_TOKEN'] Repository=benhawker/cloudformation-spike Branch=master Project=product Configuration=staging
+  --parameter-overrides GitHubToken=ENV['GITHUB_TOKEN'] Repository=benhawker/cloudformation-spike Branch=master Project=spike Configuration=staging
