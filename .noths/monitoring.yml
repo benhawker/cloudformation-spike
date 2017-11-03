@@ -20,7 +20,7 @@ Parameters:
     Default: ""
 
 Resources:
-  
+
   AlertingTopic:
     Type: AWS::SNS::Topic
 
@@ -32,14 +32,11 @@ Resources:
       AlarmDescription: "Latency is >= 100,000 for 1 minute (#product-api-alerts)"
       Namespace: ProductApi/ApiGateway
       ActionsEnabled: true
-    
-      AlarmActions:
-        - Ref: AlertingTopic
-        - Fn::ImportValue: !Ref AlertingTopic
-      OKActions:
-        - Ref: AlertingTopic
-        - Fn::ImportValue: !Ref AlertingTopic
 
+      AlarmActions: 
+        - !Ref AlertingTopic
+      OKActions: 
+        - !Ref AlertingTopic
       MetricName: Latency
       ComparisonOperator: GreaterThanOrEqualToThreshold
       EvaluationPeriods: '1'
