@@ -8,7 +8,7 @@ Using:
 - AWS DynamoDB (a single table)
 - 
 
-The project presumes you have the following ENV vars set for the AWS account on which you intend to run this.
+The project presumes you have the following ENV vars set locally for the AWS account on which you intend to run this.
 
 ```
 AWS_ACCOUNT_ID (Your AWS account ID - i.e 111121323423)
@@ -27,19 +27,17 @@ brew install awscli
 Some helper scripts are included. You may need to provide executable permissions to them:
 
 ```
-$ chmod +x bin/deploy
+$ chmod +x bin/deploy_pipeline
 ```
 
+Within this script you scpecify the parameter overrides for:
 
-Interpolate your templates & deploy your stack.
 ```
-$ bin/deploy your-stack-name
-```
-
-
-Delete the stack:
-```
-$ bin/delete your-stack-name
+GitHubToken
+Repository
+Branch
+Project
+Configuration (current setup allows only staging or production options)
 ```
 
 
