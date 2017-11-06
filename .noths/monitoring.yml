@@ -15,35 +15,8 @@ Parameters:
     Type: String 
   WriteToDynamoLambdaFunction:
     Type: String
-  SubscriberURL:
-    Type: String
-    Default: ""
-  SlackPath: #This is the identifier to the Slack webhook that will post the specified channel.
-    Type: String
-    Default: ""
 
 Resources:
-  AlertingTopic:
-    Type: AWS::SNS::Topic
-
-  # TODO: Monday - this is a nested template - so no transform.
-  # Need to convert this to AWS::Lambda::Function from Serverless::Function
-  PostAlertToSlackFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: alert-lambda.Slack
-      Runtime: nodejs6.10
-      CodeUri: ./out/alert-lambda.js
-      Timeout: 10
-      Environment:
-        Variables:
-          SLACK_PATH: !Ref SlackPath
-      Events:
-        Alarm:
-          Type: SNS
-          Properties:
-            Topic: !Ref AlertingTopic
-
   # Docs for CloudWatch::Alarm resource http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cw-alarm.html#w2ab2c21c10d187c15
   LatencyAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -53,9 +26,9 @@ Resources:
       Namespace: ProductApi/ApiGateway
       ActionsEnabled: true
       AlarmActions:
-        - Ref: AlertingTopic
+        - Ref: arn:aws:sns:eu-west-1:235649422648:spike-alarm
       OKActions: 
-        - Ref: AlertingTopic
+        - Ref: arn:aws:sns:eu-west-1:235649422648:spike-alarm
       MetricName: Latency
       ComparisonOperator: GreaterThanOrEqualToThreshold
       Period: 60 #I.e. 60 seconds.
@@ -81,7 +54,7 @@ Resources:
                     "properties": {
                         "view": "singleValue",
                         "metrics": [
-                            [ "AWS/ApiGateway", "Count", "ApiName", "NOTHS Products API", { "stat": "Sum", "period": 86400 } ],
+                            [ "AWS/ApiGateway", "Count", "ApiName", "${RestApiName}", { "stat": "Sum", "period": 86400 } ],
                             [ ".", "5XXError", ".", ".", { "stat": "Sum", "period": 86400 } ],
                             [ ".", "4XXError", ".", ".", { "stat": "Sum", "period": 86400 } ],
                             [ ".", "Latency", ".", ".", { "period": 86400 } ],

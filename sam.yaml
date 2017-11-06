@@ -9,11 +9,6 @@ Parameters:
     Description: The default stage
     Default: staging
 
-  SlackPath:
-    Type: String
-    Description: The Slack Webhook address
-    Default: ""
-
 Resources:
   ApiGateway:
     Type: AWS::Serverless::Api
@@ -103,7 +98,6 @@ Resources:
         ProductsTable: !Ref ProductsTable
         ProductUpdateTopic: !Ref ProductUpdateTopic
         WriteToDynamoLambdaFunction: !Ref WriteToDynamoLambdaFunction
-        SlackPath: !Ref SlackPath
 
 Outputs:
   ApiUrl:

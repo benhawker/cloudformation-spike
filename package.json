@@ -4,8 +4,7 @@
   "description": "This repo includes an example of a products API that exposes a single `GET products/` endpoint.",
   "main": "handler.js",
   "scripts": {
-    "build": "npm run build-alert && npm run build-dynamo-write",
-    "build-alert": "webpack --config ./alert-lambda/webpack.config.js --progress --colors",
+    "build": "npm run build-dynamo-write",
     "build-dynamo-write": "webpack --config ./dynamo-write-lambda/webpack.config.js --progress --colors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
