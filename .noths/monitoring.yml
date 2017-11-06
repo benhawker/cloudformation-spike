@@ -26,9 +26,9 @@ Resources:
       Namespace: ProductApi/ApiGateway
       ActionsEnabled: true
       AlarmActions:
-        - Ref: arn:aws:sns:eu-west-1:235649422648:spike-alarm
+        - arn:aws:sns:eu-west-1:235649422648:spike-alarm
       OKActions: 
-        - Ref: arn:aws:sns:eu-west-1:235649422648:spike-alarm
+        - arn:aws:sns:eu-west-1:235649422648:spike-alarm
       MetricName: Latency
       ComparisonOperator: GreaterThanOrEqualToThreshold
       Period: 60 #I.e. 60 seconds.
