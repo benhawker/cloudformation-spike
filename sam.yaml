@@ -86,18 +86,18 @@ Resources:
       Roles:
         - Ref: ApiGatewayExecutionRole
 
-  Monitoring:
-    Type: AWS::CloudFormation::Stack
-    Properties:
-      TemplateURL: ./.noths/monitoring.yml
-      TimeoutInMinutes: 5
-      Parameters:
-        DashboardName: !Sub "${AWS::StackName}-${Stage}"
-        RestApiName: !Ref AWS::StackName
-        RestApiStage: !Ref Stage
-        ProductsTable: !Ref ProductsTable
-        ProductUpdateTopic: !Ref ProductUpdateTopic
-        WriteToDynamoLambdaFunction: !Ref WriteToDynamoLambdaFunction
+  # Monitoring:
+  #   Type: AWS::CloudFormation::Stack
+  #   Properties:
+  #     TemplateURL: ./.noths/monitoring.yml
+  #     TimeoutInMinutes: 5
+  #     Parameters:
+  #       DashboardName: !Sub "${AWS::StackName}-${Stage}"
+  #       RestApiName: !Ref AWS::StackName
+  #       RestApiStage: !Ref Stage
+  #       ProductsTable: !Ref ProductsTable
+  #       ProductUpdateTopic: !Ref ProductUpdateTopic
+  #       WriteToDynamoLambdaFunction: !Ref WriteToDynamoLambdaFunction
 
 Outputs:
   ApiUrl:
