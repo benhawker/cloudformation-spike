@@ -25,10 +25,6 @@ Resources:
       AlarmDescription: "Latency is >= 100,000 for 1 minute (#product-api-alerts)"
       Namespace: ProductApi/ApiGateway
       ActionsEnabled: true
-      AlarmActions:
-        - arn:aws:sns:eu-west-1:235649422648:spike-alarm
-      OKActions: 
-        - arn:aws:sns:eu-west-1:235649422648:spike-alarm
       MetricName: Latency
       ComparisonOperator: GreaterThanOrEqualToThreshold
       Period: 60 #I.e. 60 seconds.
