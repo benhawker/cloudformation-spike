@@ -1,6 +1,5 @@
 {
   "Parameters": {
-    "Stage": "staging",
-    "SlackPath": "{{{ SLACK_PATH }}}"
+    "Stage": "staging"
   }
 }
