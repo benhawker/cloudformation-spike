@@ -40,7 +40,7 @@ Resources:
   WriteToDynamoLambdaFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: index.handler
+      Handler: dynamo-write-lambda.handler
       Runtime: nodejs6.10
       CodeUri: ./out/dynamo-write-lambda.js
       Policies:

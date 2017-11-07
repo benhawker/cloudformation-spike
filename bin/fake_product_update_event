@@ -10,7 +10,7 @@ require 'json'
 
 sns = Aws::SNS::Client.new(region: 'eu-west-1')
 
-topic_arn = "something_to_be_filled_in"
+topic_arn = "arn:aws:sns:eu-west-1:235649422648:product-api-tue-ProductUpdateTopic-140YWHCOJ6OD8"
 
 subject = 'Product Updated Notification'
 num = rand(10000)
