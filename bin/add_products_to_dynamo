@@ -2,7 +2,7 @@
 
 system "gem install aws-sdk-dynamodb"
 
-# Usage: ruby add_products_to_dynamo.rb STACK_NAME
+# Usage: bin/add_products_to_dynamo STACK_NAME
 require 'aws-sdk-dynamodb'
 require 'json'
 

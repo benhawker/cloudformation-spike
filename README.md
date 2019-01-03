@@ -1,24 +1,25 @@
 # cloudformation-spike
 
-This repo includes an example of a products API that exposes a single `GET products/` endpoint.
+This repo includes an example of API that exposes the following endpoints:
+- `GET products/` 
+- `GET products/{id}` 
+- `POST products/` 
 
 Using:
 - AWS Cloudformation Template using a AWS Serverless(SAM) transform
 - AWS API Gateway specified with the Swagger/Open API Specification
 - AWS DynamoDB (a single table)
-- 
+
 
 The project presumes you have the following ENV vars set locally for the AWS account on which you intend to run this.
 
 ```
 AWS_ACCOUNT_ID (Your AWS account ID - i.e 111121323423)
 AWS_REGION (The Region into which you want to deploy this project i.e. eu-west-1)
-GITHUB_TOKEN (To enable access to the repo.)
-SLACK_PATH (The path to the Slack Webhook you have setup to receive your alerts).
-
+GITHUB_TOKEN (To enable AWS CodePipeline to access the repo.)
 ```
 
-The scripts found in `bin` require that you have the `aws cli` tool installed. This can be installed with Homebrew.
+The scripts found in `bin` require that you have the `aws cli` tool installed & configured. This can be installed with Homebrew.
 ```
 brew install awscli
 ```
