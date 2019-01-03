@@ -6,3 +6,5 @@ if [[ $# -eq 0 ]] ; then
 fi
 
 aws cloudformation delete-stack --stack-name $1
+
+echo 'Delete in progress....'

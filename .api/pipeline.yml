@@ -39,7 +39,7 @@ Parameters:
     Type: String
     ConstraintDescription: |
       Only "production" or "staging" allowed. Corresponding configuration is
-      loaded from inside the ".noths/.config/" directory.
+      loaded from inside the ".api/.config/" directory.
     Description: |
       The type of configuration to launch resources deployed with this pipeline
       against.
@@ -166,7 +166,7 @@ Resources:
       ServiceRole: !GetAtt BuildRole.Arn
       Source:
         Type: CODEPIPELINE
-        BuildSpec: .noths/buildspec.yml
+        BuildSpec: .api/buildspec.yml
       Environment:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL

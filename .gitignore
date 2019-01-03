@@ -4,5 +4,5 @@ out/*
 node_modules/*
 .env
 bin/deploy-pipeline
-.noths/.config/staging.json
-.noths/.config/production.json
+.api/.config/staging.json
+.api/.config/production.json

@@ -32,7 +32,7 @@ phases:
       - aws cloudformation package --template-file sam.yaml --s3-prefix build --s3-bucket $ARTIFACT_STORE --output-template-file out/template.yaml
 
       - echo "Copying configuration"
-      - cp -R .noths/.config/* out/
+      - cp -R .api/.config/* out/
 
       - echo "Listing Output"
       - ls -lR out/

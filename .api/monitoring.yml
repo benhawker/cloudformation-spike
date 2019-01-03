@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: '2010-09-09'
-Description: NOTHS Product API Monitoring Dashboard
+Description: Product API Monitoring Dashboard
 
 Parameters:
   DashboardName:
