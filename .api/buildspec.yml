@@ -22,9 +22,6 @@ phases:
 
   build:
     commands:
-      - echo "Transpile Lambda function"
-      - npm run build
-
       - echo "Compiling API template..."
       - mustache out/build.json swagger.yaml > out/swagger.yaml
 

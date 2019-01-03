@@ -30,7 +30,7 @@ Some helper scripts are included. You may need to provide executable permissions
 $ chmod +x bin/deploy_pipeline
 ```
 
-Within this script you scpecify the parameter overrides for:
+Within this script you specify the parameter overrides for:
 
 ```
 GitHubToken
@@ -43,19 +43,19 @@ Configuration (current setup allows only staging or production options)
 
 Returns all resources for the given stack:
 ```
-$ bin/describe your-stack-name 
+$ bin/describe product-api
 ```
 
 
 A helper script for populating some basic records in the created DynamoDB table:
 ```
-ruby bin/add_products_to_dynamo.rb your-stack-name
+bin/add_products_to_dynamo.rb product-api
 ```
 
 
 Get the root path to your newly created api
 ```
-bin/get_root_url your-stack-name
+bin/get_root_url product-api
 ```
 
 

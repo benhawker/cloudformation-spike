@@ -34,32 +34,6 @@ Resources:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
 
-  ProductUpdateTopic:
-    Type: AWS::SNS::Topic
-
-  WriteToDynamoLambdaFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: dynamo-write-lambda.handler
-      Runtime: nodejs6.10
-      CodeUri: ./out/dynamo-write-lambda.js
-      Policies:
-        - Version: 2012-10-17
-          Statement:
-            - Effect: Allow
-              Action:
-                - dynamodb:PutItem
-              Resource:
-                - !GetAtt ProductsTable.Arn
-      Events:
-        Update: 
-          Type: SNS
-          Properties:
-            Topic: !Ref ProductUpdateTopic
-      Environment:
-        Variables:
-          TABLE: !Ref ProductsTable
-
   ApiGatewayExecutionRole:
     Type: AWS::IAM::Role
     Properties:

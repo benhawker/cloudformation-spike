@@ -1,10 +1,13 @@
 #!/bin/bash
 
-# This script deploys or redeploys the specified AWS CodePipeline as defined in .noths/pipeline.yml.
+# This script deploys or redeploys the specified AWS CodePipeline as defined in .api/pipeline.yml.
+# The CloudFormation stack for the pipeline is distinct from the CF Stack that brings
+# the API Gateway, DynamoDB etc.
+
 aws cloudformation deploy \
   --profile default \
   --region eu-west-1 \
-  --template-file .noths/pipeline.yml \
-  --stack-name cloudformation-spike \
+  --template-file .api/pipeline.yml \
+  --stack-name cloudformation-spike-pipeline \
   --capabilities CAPABILITY_IAM \
-  --parameter-overrides GitHubToken=ENV['GITHUB_TOKEN'] Repository=benhawker/cloudformation-spike Branch=master Project=product Configuration=staging
+  --parameter-overrides GitHubToken=ENV['GITHUB_TOKEN'] Repository=benhawker/cloudformation-spike Branch=master Project=product-api Configuration=staging
