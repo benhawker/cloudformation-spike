@@ -6,3 +6,4 @@ node_modules/*
 bin/deploy-pipeline
 .api/.config/staging.json
 .api/.config/production.json
+coverage/*

@@ -13,7 +13,7 @@ Resources:
   ApiGateway:
     Type: AWS::Serverless::Api
     Properties:
-      DefinitionUri: ./out/swagger.yaml
+      DefinitionUri: ./out/api.json
       StageName: !Ref Stage
       Variables:
         ExecutionRoleName:

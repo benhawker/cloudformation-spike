@@ -1,0 +1,38 @@
+operationId: postProduct
+summary: Create a product
+tags:
+  - Internal
+consumes:
+  - application/json
+produces:
+  - application/json
+responses:
+  "201":
+    description: 201 Created.
+    schema:
+      $ref: "../../definitions.yml#/Empty"
+    examples:
+      application/json: |
+       $ref: "./response.yml"
+x-amazon-apigateway-integration:
+  type: aws
+  credentials: "arn:aws:iam::{{ AWS_ACCOUNT_ID }}:role/${stageVariables.ExecutionRoleName}"
+  httpMethod: POST
+  uri: "arn:aws:apigateway:{{ AWS_REGION }}:dynamodb:action/PutItem"
+  requestTemplates:
+    $ref: "./request.yml"
+  requestParameters:
+    integration.request.header.Content-Type: "'application/json'"
+  responses:
+    default:
+      statusCode: "201"
+      responseTemplates:
+        $ref: "./response.yml"
+      400:
+        responseTemplates:
+          application/json: |
+            $ref: "../../definitions.yml#/Error"
+      500:
+        responseTemplates:
+          application/x-amz-json-1.0: |
+            $ref: "../../definitions.yml#/Error"

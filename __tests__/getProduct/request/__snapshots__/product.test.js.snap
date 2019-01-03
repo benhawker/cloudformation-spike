@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Validating request templates returns the correct response Produced valid JSON 1`] = `
+Object {
+  "Item": Object {
+    "description": Object {
+      "S": "Another really great product description",
+    },
+    "id": Object {
+      "S": "1",
+    },
+    "price": Object {
+      "N": "100",
+    },
+    "title": Object {
+      "S": "Product Name 1",
+    },
+  },
+}
+`;

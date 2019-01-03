@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Validating response templates Rendered correctly Produced valid JSON 1`] = `
+"[
+      {
+      \\"id\\": \\"1\\",
+      \\"title\\": \\"Product Name 2\\",
+      \\"price\\": 71,
+      \\"description\\": \\"Another really great product description\\"
+    },      {
+      \\"id\\": \\"1\\",
+      \\"title\\": \\"Product Name 8\\",
+      \\"price\\": 12,
+      \\"description\\": \\"Another really great product description\\"
+    },      {
+      \\"id\\": \\"1\\",
+      \\"title\\": \\"Product Name 9\\",
+      \\"price\\": 93,
+      \\"description\\": \\"Another really great product description\\"
+    },      {
+      \\"id\\": \\"1\\",
+      \\"title\\": \\"Product Name 1\\",
+      \\"price\\": 32,
+      \\"description\\": \\"Another really great product description\\"
+    },      {
+      \\"id\\": \\"6\\",
+      \\"title\\": \\"Product Name 6\\",
+      \\"price\\": 95,
+      \\"description\\": \\"Another really great product description\\"
+    },      {
+      \\"id\\": \\"0\\",
+      \\"title\\": \\"Product Name 0\\",
+      \\"price\\": 73,
+      \\"description\\": \\"Another really great product description\\"
+    },      {
+      \\"id\\": \\"5\\",
+      \\"title\\": \\"Product Name 5\\",
+      \\"price\\": 53,
+      \\"description\\": \\"Another really great product description\\"
+    },      {
+      \\"id\\": \\"4\\",
+      \\"title\\": \\"Product Name 4\\",
+      \\"price\\": 12,
+      \\"description\\": \\"Another really great product description\\"
+    },      {
+      \\"id\\": \\"7\\",
+      \\"title\\": \\"Product Name 7\\",
+      \\"price\\": 78,
+      \\"description\\": \\"Another really great product description\\"
+    },      {
+      \\"id\\": \\"3\\",
+      \\"title\\": \\"Product Name 3\\",
+      \\"price\\": 78,
+      \\"description\\": \\"Another really great product description\\"
+    }  ]
+"
+`;

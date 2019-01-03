@@ -1,0 +1,4 @@
+DEFAULT_4XX:
+  $ref: ./responses/4XX/response.yml
+DEFAULT_5XX:
+  $ref: ./responses/5XX/response.yml

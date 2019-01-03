@@ -1,0 +1,6 @@
+statusCode: null
+responseParameters:
+  gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+  gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+responseTemplates:
+  $ref: './responses.yml'

@@ -1,0 +1,12 @@
+application/json: |
+  #set ($products = $input.path('$.Items'))
+  [
+    #foreach($product in $products)
+      {
+        "id": "$product.id.S",
+        "title": "$product.title.S",
+        "price": $product.price.N,
+        "description": "$product.description.S"
+      }#if($foreach.hasNext),#end
+    #end
+  ]

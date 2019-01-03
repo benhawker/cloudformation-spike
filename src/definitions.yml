@@ -1,0 +1,11 @@
+Empty:
+  $ref: ./definitions/empty.yml
+
+Error:
+  $ref: ./definitions/error.yml
+
+Products:
+  $ref: ./definitions/products.yml
+
+Product:
+  $ref: ./definitions/product.yml

@@ -1,0 +1,4 @@
+application/json: |
+  {
+    "TableName": "${stageVariables.ProductsTable}"
+  }

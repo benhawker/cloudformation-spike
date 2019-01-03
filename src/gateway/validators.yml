@@ -1,0 +1,9 @@
+all:
+  validateRequestBody: true
+  validateRequestParameters: true
+body-only:
+  validateRequestBody: true
+  validateRequestParameters: false
+params-only:
+  validateRequestBody: false
+  validateRequestParameters: true

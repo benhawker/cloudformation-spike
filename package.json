@@ -4,9 +4,11 @@
   "description": "This repo includes an example of a products API that exposes a single `GET products/` endpoint.",
   "main": "handler.js",
   "scripts": {
-    "build": "npm run build-dynamo-write",
-    "build-dynamo-write": "webpack --config ./dynamo-write-lambda/webpack.config.js --progress --colors",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bundle": "swagger-cli bundle src/api.yml",
+    "validate": "swagger-cli validate src/api.yml",
+    "jest": "NODE_ENV=test jest __tests__/.+/*.test.js --coverage",
+    "test": "npm run jest",
+    "test:watch": "npm run jest -- --watch"
   },
   "repository": {
     "type": "git",
@@ -19,13 +21,23 @@
   },
   "homepage": "https://github.com/benhawker/cloudformation-spike#readme",
   "dependencies": {
+    "api-gateway-template-tester": "0.0.1",
     "aws-sdk": "^2.141.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "webpack": "^3.8.1",
-    "node-lambda-events": "^0.1.6"
+    "faker": "^4.1.0",
+    "webpack": "^3.8.1"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "transform": {
+      "\\.js$": "babel-jest"
+    },
+    "setupTestFrameworkScriptFile": "<rootDir>/__tests__/__utils__/setup.js"
   },
   "babel": {
     "presets": [
@@ -38,5 +50,9 @@
         }
       ]
     ]
+  },
+  "devDependencies": {
+    "fsevents": "^1.2.4",
+    "jest": "^23.6.0"
   }
 }

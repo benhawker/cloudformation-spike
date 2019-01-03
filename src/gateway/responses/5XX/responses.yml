@@ -1,0 +1,13 @@
+application/json: |
+  {
+    "type": "InternalServerError",
+    "message": "There was an internal error",
+    "__raw": {
+      "requestId": "$context.requestId",
+      "type": "$context.httpMethod",
+      "gateway": {
+        "type": "$context.error.responseType",
+        "message": "$context.error.message"
+      }
+    }
+  }

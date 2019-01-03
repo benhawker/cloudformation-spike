@@ -1,0 +1,7 @@
+application/json: |
+  {
+    "TableName": "${stageVariables.ProductsTable}",
+    "Key": { 
+      "id": { "S": "$input.params('id')" }
+    }
+  }

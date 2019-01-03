@@ -1,0 +1,44 @@
+type: object
+description: |
+  An error object, containing a software-level error type and custom error
+  message. The original low-level error is contained inside the __raw property
+  key.
+required:
+  - message
+  - type
+  - __raw
+properties:
+  message:
+    type: string
+    description: A custom, high-level message that can be exposed to an end-user.
+  type:
+    type: string
+    description: |
+      A software-level error type. Multiple low-level error types are subsumed
+      by fewer error types, with this property.
+  __raw:
+    type: object
+    description: The underlying low-level error message that has been received.
+    required:
+      - requestId
+      - type
+    properties:
+      requestId:
+        type: string
+        description: The Request ID associated with the error.
+      type:
+        type: string
+        description: The low-level error type.
+      gateway:
+        type: object
+        description: The gateway error type and message, if present.
+        required:
+          - type
+          - message
+        properties:
+          type:
+            description: The gateway error type.
+            type: string
+          message:
+            type: string
+            description: The gateway error message.

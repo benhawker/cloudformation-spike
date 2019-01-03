@@ -1,0 +1,13 @@
+application/json: |
+  {
+    "type": "BadRequest",
+    "message": "Your request could not be processed.",
+    "__raw": {
+      "requestId": "$context.requestId",
+      "type": "$context.httpMethod",
+      "gateway": {
+        "type": "$context.error.responseType",
+        "message": "$context.error.message"
+      }
+    }
+  }

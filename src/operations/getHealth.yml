@@ -1,0 +1,33 @@
+operationId: getHealth
+summary: |
+  Returns the current health of the API
+tags:
+  - Internal
+consumes:
+  - application/json
+produces:
+  - application/json
+responses:
+  "200":
+    description: 200 response
+    schema:
+      $ref: "../definitions.yml#/Empty"
+    examples:
+      application/json: |
+        {}
+x-amazon-apigateway-integration:
+  responses:
+    default:
+      statusCode: "200"
+      responseTemplates:
+        application/json: |
+          {}
+  passthroughBehavior: never
+  requestParameters:
+    integration.request.header.Content-Type: "'application/json'"
+  requestTemplates:
+    application/json: |
+      {
+        "statusCode": 200
+      }
+  type: mock

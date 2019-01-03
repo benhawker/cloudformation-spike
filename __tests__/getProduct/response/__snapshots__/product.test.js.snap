@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Validating response templates Rendered correctly Produced valid JSON 1`] = `
+"  {
+    \\"id\\": \\"1\\",
+    \\"title\\": \\"Product Name 1\\",
+    \\"price\\": 49,
+    \\"description\\": \\"Another really great product description\\"
+  }
+"
+`;

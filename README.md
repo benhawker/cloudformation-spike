@@ -10,6 +10,16 @@ Using:
 - AWS API Gateway specified with the Swagger/Open API Specification
 - AWS DynamoDB (a single table)
 
+----
+
+Run the tests with:
+```
+npm run jest
+```
+
+To run the tests locally I am testing against a local DynamoDB provisioned with [LocalStack](https://github.com/localstack/localstack). This allows for connect to a local version of DynamoDB for testing purposes at localhost:4569.
+
+----
 
 The project presumes you have the following ENV vars set locally for the AWS account on which you intend to run this.
 
@@ -58,7 +68,6 @@ Get the root path to your newly created api
 ```
 bin/get_root_url product-api
 ```
-
 
 
 

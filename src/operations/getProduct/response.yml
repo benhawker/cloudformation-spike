@@ -1,0 +1,8 @@
+application/json: |
+  #set ($product = $input.path('$.Item'))
+    {
+      "id": "$product.id.S",
+      "title": "$product.title.S",
+      "price": $product.price.N,
+      "description": "$product.description.S"
+    }

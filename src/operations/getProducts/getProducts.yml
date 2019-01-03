@@ -1,0 +1,71 @@
+operationId: getProductss
+summary: |
+  Returns all products in the table
+tags:
+  - Internal
+consumes:
+  - application/json
+produces:
+  - application/json
+parameters:
+  - name: pageSize
+    in: query
+    description: Number of products returned
+    type: integer
+responses:
+  200:
+    description: A valid request. Returns all products.
+    headers:
+      Access-Control-Allow-Headers:
+        type: string
+      Access-Control-Allow-Origin:
+        type: string
+      Content-Type:
+        type: string
+      Access-Control-Allow-Methods:
+        type: string
+    schema:
+      $ref: "../../definitions.yml#/Products"
+    examples:
+      application/json: |
+       $ref: "./response.yml"
+  400:
+    description: A 4** Error occurred.
+    schema:
+      $ref: "../../definitions.yml#/Error"
+  500:
+    description: A 5** Error occurred.
+    schema:
+      $ref: "../../definitions.yml#/Error"
+x-amazon-apigateway-integration:
+  type: aws
+  credentials: "arn:aws:iam::{{ AWS_ACCOUNT_ID }}:role/${stageVariables.ExecutionRoleName}"
+  httpMethod: POST
+  uri: "arn:aws:apigateway:{{ AWS_REGION }}:dynamodb:action/Scan"
+  requestTemplates:
+    $ref: "./request.yml"
+  responses:
+    default:
+      statusCode: 200
+      responseTemplates:
+        $ref: "./response.yml"
+      responseParameters:
+        method.response.header.Access-Control-Allow-Methods: "'GET'"
+        method.response.header.Access-Control-Allow-Headers: "'Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'"
+        method.response.header.Access-Control-Allow-Origin: "'*'"
+      400:
+        responseTemplates:
+          application/json: |
+            {
+              "type": "BadRequest",
+              "message": "Your request could not be processed.",
+              "__raw": $input.body
+            }
+      500:
+        responseTemplates:
+          application/x-amz-json-1.0: |
+            {
+              "type": "InternalServerError",
+              "message": "There was an internal error",
+              "__raw": $input.body
+            }  

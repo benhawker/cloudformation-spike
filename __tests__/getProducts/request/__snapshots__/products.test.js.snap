@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Validating request templates returns the correct response Produced valid JSON 1`] = `
+Object {
+  "Count": 3,
+  "Items": Array [
+    Object {
+      "description": Object {
+        "S": "Another really great product description",
+      },
+      "id": Object {
+        "S": "1",
+      },
+      "price": Object {
+        "N": "100",
+      },
+      "title": Object {
+        "S": "Product Name 1",
+      },
+    },
+    Object {
+      "description": Object {
+        "S": "Another really great product description",
+      },
+      "id": Object {
+        "S": "3",
+      },
+      "price": Object {
+        "N": "100",
+      },
+      "title": Object {
+        "S": "Product Name 3",
+      },
+    },
+    Object {
+      "description": Object {
+        "S": "Another really great product description",
+      },
+      "id": Object {
+        "S": "2",
+      },
+      "price": Object {
+        "N": "100",
+      },
+      "title": Object {
+        "S": "Product Name 2",
+      },
+    },
+  ],
+  "ScannedCount": 3,
+}
+`;

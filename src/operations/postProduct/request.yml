@@ -1,0 +1,11 @@
+application/json: |
+  #set ($product = $input.path('$'))
+  {
+    "TableName": "${stageVariables.ProductsTable}",
+    "Item": { 
+      "title": { "S": "$product.title" },
+      "description": { "S": "$product.description" },
+      "price": { "N": "$product.price" },
+      "id": { "S": "$product.id" }
+    }
+  }

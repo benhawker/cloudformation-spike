@@ -1,0 +1,18 @@
+type: array
+items:
+  type: object
+  description: |
+      Get all Product details
+  required:
+    - title
+    - description
+  properties:
+    title:
+      type: string
+      description: title desc
+    price:
+      type: number
+      description: price desc
+    description:
+      type: string
+      description: product description

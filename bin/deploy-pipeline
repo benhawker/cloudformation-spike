@@ -8,6 +8,6 @@ aws cloudformation deploy \
   --profile default \
   --region eu-west-1 \
   --template-file .api/pipeline.yml \
-  --stack-name cloudformation-spike-pipeline \
+  --stack-name api-pipeline \
   --capabilities CAPABILITY_IAM \
   --parameter-overrides GitHubToken=ENV['GITHUB_TOKEN'] Repository=benhawker/cloudformation-spike Branch=master Project=product-api Configuration=staging

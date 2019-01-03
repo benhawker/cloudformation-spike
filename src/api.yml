@@ -1,0 +1,26 @@
+swagger: "2.0"
+schemes:
+  - https
+info:
+  title: Product API
+  version: 0.0.1
+  description: |
+    Example API Gateway implementation
+x-amazon-apigateway-request-validators:
+  $ref: ./gateway/validators.yml
+x-amazon-apigateway-gateway-responses:
+  $ref: ./gateway/responses.yml
+definitions:
+  $ref: ./definitions.yml
+paths:
+  /health:
+    get:
+      $ref: ./operations/getHealth.yml
+  /products:
+    get:
+      $ref: ./operations/getProducts/getProducts.yml
+    post:
+      $ref: ./operations/postProduct/postProduct.yml
+  /products/{id}:
+    get:
+      $ref: ./operations/getProduct/getProduct.yml

@@ -1,0 +1,2 @@
+type: object
+description: An empty object denoting an empty request or response.
