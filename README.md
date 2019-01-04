@@ -9,6 +9,7 @@ Using:
 - AWS Cloudformation Template using a AWS Serverless(SAM) transform
 - AWS API Gateway specified with the Swagger/Open API Specification
 - AWS DynamoDB (a single table)
+- AWS CodeBuild & CodePipeline provisioned 
 
 ----
 
@@ -70,4 +71,25 @@ bin/get_root_url product-api
 ```
 
 
+-----
 
+Get Item with AWS CLI
+```
+aws dynamodb get-item --table-name product-api-ProductsTable-1TTWCX7HUCYEY --key '{"id": {"S": "1"}}'
+```
+
+Put Item with AWS CLI
+```
+aws dynamodb put-item \
+    --table-name product-api-ProductsTable-1TTWCX7HUCYEY \
+    --item '{
+		"id": { "S": "99" },
+		"title": { "S": "Something" },
+		"description": { "S": "XYZ" },
+		"price": { "N": "123" } }'
+```
+
+Delete Stack
+```
+aws cloudformation delete-stack --role-arn $ROLE_ARN --stack-name $STACK_NAME
+```

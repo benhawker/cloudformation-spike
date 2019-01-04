@@ -1,10 +1,12 @@
 #!/usr/bin/env ruby
 
 system "gem install aws-sdk-dynamodb"
+system "gem install literate_randomizer"
 
 # Usage: bin/add_products_to_dynamo STACK_NAME
 require 'aws-sdk-dynamodb'
 require 'json'
+require 'literate_randomizer'
 
 dynamodb = Aws::DynamoDB::Client.new(region: 'eu-west-1')
 
@@ -18,8 +20,9 @@ end.first["PhysicalResourceId"]
 10.times do |i|
   product = {
     id: "#{i}",
-    name: "Product Name #{i}",
-    price: rand(100)
+    title: "Product Name #{i}",
+    price: rand(100),
+    description: LiterateRandomizer.sentence
   }
 
   params = {
