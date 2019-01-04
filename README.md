@@ -73,6 +73,12 @@ bin/get_root_url product-api
 
 -----
 
+Scan table with AWS CLI
+```
+aws dynamodb scan --table-name product-api-ProductsTable-ABTXHF76DRMF --max-items 10
+```
+
+
 Get Item with AWS CLI
 ```
 aws dynamodb get-item --table-name product-api-ProductsTable-1TTWCX7HUCYEY --key '{"id": {"S": "1"}}'
